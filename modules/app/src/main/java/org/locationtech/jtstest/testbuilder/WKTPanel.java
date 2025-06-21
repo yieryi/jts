@@ -43,6 +43,7 @@ import org.locationtech.jtstest.testbuilder.model.DisplayParameters;
 import org.locationtech.jtstest.testbuilder.model.GeometryEditModel;
 import org.locationtech.jtstest.testbuilder.model.GeometryType;
 import org.locationtech.jtstest.testbuilder.model.TestBuilderModel;
+import org.locationtech.jtstest.testbuilder.ui.GeometryTransferable;
 import org.locationtech.jtstest.testbuilder.ui.SwingUtil;
 import org.locationtech.jtstest.testbuilder.ui.dnd.FileDrop;
 import org.locationtech.jtstest.util.GeometryTextCleaner;
@@ -52,10 +53,10 @@ import org.locationtech.jtstest.util.io.MultiFormatReader;
 /**
  * @version 1.7
  */
-public class WKTPanel extends JPanel 
+public class WKTPanel extends JPanel
 {
 	TestBuilderModel tbModel;
-	
+
     GridBagLayout gridBagLayout1 = new GridBagLayout();
     JPanel panelAB = new JPanel();
     JButton loadButton = new JButton();
@@ -65,7 +66,7 @@ public class WKTPanel extends JPanel
     JLabel bLabel = new JLabel();
     GridBagLayout gridBagLayout2 = new GridBagLayout();
     JLabel aLabel = new JLabel();
-    
+
     JPanel aPanel = new JPanel();
     JButton aCopyButton = new JButton();
     JButton aPasteButton = new JButton();
@@ -76,7 +77,7 @@ public class WKTPanel extends JPanel
     FlowLayout aButtonPanelLayout = new FlowLayout();
     BorderLayout aPanelLayout = new BorderLayout();
     JRadioButton aRB = new JRadioButton();
-    
+
     JPanel bPanel = new JPanel();
     JButton bCopyButton = new JButton();
     JButton bPasteButton = new JButton();
@@ -87,7 +88,7 @@ public class WKTPanel extends JPanel
     FlowLayout bButtonPanelLayout = new FlowLayout();
     BorderLayout bPanelLayout = new BorderLayout();
     JRadioButton bRB = new JRadioButton();
-    
+
     JScrollPane aScrollPane = new JScrollPane();
     JTextArea aTextArea = new JTextArea();
     JScrollPane bScrollPane = new JScrollPane();
@@ -114,28 +115,28 @@ public class WKTPanel extends JPanel
 
     void uiInit() throws Exception {
         titledBorder1 = new TitledBorder("");
-        
+
         loadButton.setMaximumSize(new Dimension(38, 38));
         loadButton.setPreferredSize(new Dimension(38, 38));
         loadButton.setMargin(new Insets(8, 8, 8, 8));
 //        loadButton.setText("Load");
         loadButton.setIcon(AppIcons.GEOM_LOAD);
         loadButton.setToolTipText(AppStrings.TIP_WKT_PANEL_LOAD_GEOMETRY);
-        
+
         inspectButton.setMaximumSize(new Dimension(38, 30));
         inspectButton.setPreferredSize(new Dimension(24, 38));
         inspectButton.setToolTipText(AppStrings.TIP_INSPECT_GEOMETRY);
         inspectButton.setIcon(AppIcons.GEOM_INSPECT);
-        
+
         exchangeButton.setMaximumSize(new Dimension(38, 30));
         exchangeButton.setPreferredSize(new Dimension(24, 38));
         exchangeButton.setToolTipText(AppStrings.TIP_EXCHANGE_A_B);
         exchangeButton.setIcon(AppIcons.GEOM_EXCHANGE);
-        
+
         JButton btnUndo = SwingUtil.createButton(AppIcons.UNDO, "Undo", new ActionListener() {
           public void actionPerformed(ActionEvent e) {
             tbModel.getGeometryEditModel().undo();
-          }        
+          }
         });
         btnUndo.setMaximumSize(new Dimension(38, 30));
         Box panelButtons = Box.createVerticalBox();
@@ -145,21 +146,21 @@ public class WKTPanel extends JPanel
         panelButtons.add(exchangeButton);
         panelButtons.add(inspectButton);
         panelButtons.add(btnUndo);
-        
+
 
         panelAB.setLayout(gridBagLayout2);
-        
+
         aLabel.setFont(new java.awt.Font("Dialog", 1, 16));
         aLabel.setForeground(AppColors.GEOM_A);
         aLabel.setText(AppStrings.GEOM_LABEL_A);
         aLabel.setPreferredSize(new Dimension(20, 20));
         aLabel.setHorizontalTextPosition(SwingConstants.LEFT);
-        
+
         bLabel.setFont(new java.awt.Font("Dialog", 1, 16));
         bLabel.setForeground(AppColors.GEOM_B);
         bLabel.setText(AppStrings.GEOM_LABEL_B);
         bLabel.setPreferredSize(new Dimension(20, 20));
-        
+
         aScrollPane.setBorder(BorderFactory.createLoweredBevelBorder());
         aTextArea.setWrapStyleWord(true);
         aTextArea.setLineWrap(true);
@@ -185,7 +186,7 @@ public class WKTPanel extends JPanel
             setFocusGeometry(1);
           }
         });
-        
+
         aCopyButton.setToolTipText(AppStrings.TIP_COPY_DATA);
         aCopyButton.setIcon(AppIcons.COPY);
         aCopyButton.setMargin(new Insets(0, 0, 0, 0));
@@ -204,7 +205,7 @@ public class WKTPanel extends JPanel
         aButtonPanel.add(aPasteButton);
         aButtonPanel.add(aCopyButton);
         aButtonPanel.add(aCutButton);
-        
+
         aLabel.setAlignmentX(LEFT_ALIGNMENT);
         aRB.setAlignmentX(LEFT_ALIGNMENT);
         aRB.setSelected(true);
@@ -216,12 +217,12 @@ public class WKTPanel extends JPanel
         //aLabelPanel.add(aRB);
         aLabelPanel.add(aLabel);
         aLabelPanel.add(aButtonPanel);
-        
+
         aPanel.setLayout(aPanelLayout);
         aPanel.add(aLabelPanel, BorderLayout.WEST);
         aPanel.add(aScrollPane, BorderLayout.CENTER);
         //aPanel.add(aButtonPanel, BorderLayout.EAST);
-        
+
         bCopyButton.setToolTipText(AppStrings.TIP_COPY_DATA);
         bCopyButton.setIcon(AppIcons.COPY);
         bCopyButton.setMargin(new Insets(0, 0, 0, 0));
@@ -256,7 +257,7 @@ public class WKTPanel extends JPanel
         bPanel.add(bLabelPanel, BorderLayout.WEST);
         bPanel.add(bScrollPane, BorderLayout.CENTER);
         //bPanel.add(bButtonPanel, BorderLayout.EAST);
-        
+
         panelAB.add(
         		aPanel,
             new GridBagConstraints(1, 0, 1, 1,
@@ -275,7 +276,7 @@ public class WKTPanel extends JPanel
                 0, 0));
         bScrollPane.getViewport().add(bTextArea, null);
         aScrollPane.getViewport().add(aTextArea, null);
-        
+
         /*
         this.setLayout(gridBagLayout1);
         this.setPreferredSize(new java.awt.Dimension(394, 176));
@@ -296,11 +297,11 @@ public class WKTPanel extends JPanel
                 new Insets(2, 2, 0, 2),
                 0, 0));
         */
-        
+
         this.setLayout(new BorderLayout());
         this.add(panelAB, BorderLayout.CENTER);
         this.add(panelButtons, BorderLayout.EAST);
-        
+
         loadButton.addActionListener(
             new ActionListener() {
               public void actionPerformed(ActionEvent e) {
@@ -369,19 +370,19 @@ public class WKTPanel extends JPanel
         txt = shortForm;
       else
         txt = GeometryEditModel.getText(g, GeometryType.WELLKNOWNTEXT);
-      
+
       switch (geomIndex) {
-      case 0: 
+      case 0:
         aTextArea.setText(txt);
         aLabel.setToolTipText(GeometryUtil.structureSummary(g));
         break;
-      case 1: 
-        bTextArea.setText(txt); 
+      case 1:
+        bTextArea.setText(txt);
         bLabel.setToolTipText(GeometryUtil.structureSummary(g));
         break;
       }
     }
-    
+
     public String getGeometryTextA() {
         return aTextArea.getText();
     }
@@ -395,7 +396,7 @@ public class WKTPanel extends JPanel
     	if (geomIndex == 0) return aTextArea.getText();
     	return bTextArea.getText();
     }
-    
+
     public String getGeometryTextClean(int geomIndex)
     {
     	String text = getGeometryText(geomIndex);
@@ -410,7 +411,7 @@ public class WKTPanel extends JPanel
     	}
     	return textClean;
     }
-    
+
     void aTextArea_keyTyped(KeyEvent e) {
         loadButton.setEnabled(true);
     }
@@ -422,7 +423,7 @@ public class WKTPanel extends JPanel
     void loadButton_actionPerformed(ActionEvent e) {
       try {
         tbModel.loadGeometryText(
-            getGeometryTextClean(0), 
+            getGeometryTextClean(0),
             getGeometryTextClean(1));
         JTSTestBuilder.controller().zoomToInput();
       }
@@ -434,16 +435,24 @@ public class WKTPanel extends JPanel
     void aCopyButton_actionPerformed(ActionEvent e) {
       copy(e, 0);
     }
-    
+
     void bCopyButton_actionPerformed(ActionEvent e) {
       copy(e, 1);
     }
-    
+
     void copy(ActionEvent e, int geomIndex)
     {
       Geometry g = tbModel.getCurrentCase().getGeometry(geomIndex);
       if (g == null) return;
-      
+
+        Boolean isShift = SwingUtil.isShiftKeyPressed(e);
+        Boolean isCtrl= SwingUtil.isCtlKeyPressed(e);
+        if (isShift && isCtrl)
+        {
+            String geojson = IOUtil.toGeoJSON(g);
+            SwingUtil.copyToClipboard(geojson, false);
+            return;
+        }
       if (SwingUtil.isShiftKeyPressed(e)) {
         String wkb = IOUtil.toWKBHex(g);
         SwingUtil.copyToClipboard(wkb, false);
@@ -452,7 +461,7 @@ public class WKTPanel extends JPanel
       boolean isFormatted = SwingUtil.isCtlKeyPressed(e);
       SwingUtil.copyToClipboard(g, isFormatted);
     }
-    
+
     void aPasteButton_actionPerformed(ActionEvent e)
     {
       paste(0);
@@ -460,7 +469,7 @@ public class WKTPanel extends JPanel
     void bPasteButton_actionPerformed(ActionEvent e) {
       paste(1);
     }
-    
+
     void paste(int geomIndex) {
       try {
         tbModel.pasteGeometry(geomIndex);
@@ -470,7 +479,7 @@ public class WKTPanel extends JPanel
         JTSTestBuilderFrame.reportException(ex);
       }
     }
-    
+
     void aCutButton_actionPerformed(ActionEvent e) {
       aTextArea.setText("");
       tbModel.getGeometryEditModel().clear(0);
@@ -480,10 +489,10 @@ public class WKTPanel extends JPanel
       tbModel.getGeometryEditModel().clear(1);
     }
 
-    private void initFileDrop(Component comp, int index) 
+    private void initFileDrop(Component comp, int index)
     {
       final int geomIndex = index;
-      
+
       new FileDrop(comp, new FileDrop.Listener() {
         public void filesDropped(java.io.File[] files) {
           try {
@@ -500,21 +509,21 @@ public class WKTPanel extends JPanel
     Border focusBorder = BorderFactory.createMatteBorder(0, 2, 0, 0, Color.green);
     //Border otherBorder = BorderFactory.createEmptyBorder();
     Border otherBorder = BorderFactory.createMatteBorder(0, 2, 0, 0, Color.white);
-    
+
     private static Color focusBackgroundColor = AppColors.BACKGROUND_FOCUS;
     private static Color otherBackgroundColor = AppColors.BACKGROUND;
-    
+
     private void setFocusGeometry(int index) {
       JTSTestBuilder.controller().setFocusGeometry(index);
-      
+
       JTextArea focusTA = index == 0 ? aTextArea : bTextArea;
       JTextArea otherTA = index == 0 ? bTextArea : aTextArea;
       //focusTA.setBorder(focusBorder);
       //otherTA.setBorder(otherBorder);
-      
+
       focusTA.setBackground(focusBackgroundColor);
       otherTA.setBackground(otherBackgroundColor);
       repaint();
     }
-  
+
 }
